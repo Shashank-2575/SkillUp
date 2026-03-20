@@ -1,0 +1,87 @@
+:root {
+            --skillup-green: #10b981;
+            --skillup-dark: #0f172a;
+            --skillup-muted: #64748b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1e293b;
+            background-color: #ffffff;
+        }
+
+        /* Hero Section */
+        .hero-section { padding: 100px 0 60px; text-align: center; }
+        .hero-title { font-size: 3.5rem; font-weight: 800; line-height: 1.2; }
+        .text-green { color: var(--skillup-green); }
+        .btn-green { background-color: var(--skillup-green); color: white; border: none; padding: 12px 24px; font-weight: 600; }
+        .btn-green:hover { background-color: #059669; color: white; }
+        .btn-outline-green { border: 1px solid var(--skillup-green); color: var(--skillup-green); padding: 12px 24px; }
+
+        /* Section Headers */
+        .section-title { font-weight: 700; font-size: 2.25rem; margin-bottom: 10px; }
+        .section-subtitle { color: var(--skillup-muted); margin-bottom: 50px; }
+
+        /* Feature Cards */
+        .card-custom {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 30px;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+        .card-custom:hover { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .icon-green { color: var(--skillup-green); font-size: 1.5rem; margin-bottom: 15px; }
+
+        /* How It Works Steps */
+        .step-circle {
+            width: 48px;
+            height: 48px;
+            background-color: var(--skillup-green);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+
+        /* Why Choose SkillUp Image Placeholder */
+        .brain-box {
+            background-color: #ecfdf5;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        /* Pricing */
+        .pricing-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 40px 20px;
+        }
+        .pricing-card.featured { border: 2px solid var(--skillup-green); position: relative; }
+        .price-text { font-size: 2.5rem; font-weight: 800; }
+
+        /* FAQ */
+        .faq-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            background-color: var(--skillup-green);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
