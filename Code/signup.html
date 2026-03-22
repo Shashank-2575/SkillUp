@@ -15,12 +15,11 @@
             margin: 0;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* Ensures footer stays at bottom */
+            min-height: 100vh;
         }
 
-        /* Centering Wrapper for the Auth Cards */
         .auth-wrapper {
-            flex-grow: 1; /* Takes up all space between navbar and footer */
+            flex-grow: 1;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -61,10 +60,10 @@
         .subtitle { color: #64748b; font-size: 0.9rem; margin-bottom: 30px; }
 
         .form-label { font-weight: 500; font-size: 0.85rem; color: #475569; margin-bottom: 6px; }
+        .input-group { border: 1px solid #dee2e6; border-radius: 8px; margin-bottom: 15px; }
         .input-group-text { background: white; border-right: none; color: #94a3b8; }
         .form-control { border-left: none; padding: 12px; border-radius: 8px; font-size: 0.95rem; }
         .form-control:focus { box-shadow: none; border-color: #dee2e6; }
-        .input-group { border: 1px solid #dee2e6; border-radius: 8px; margin-bottom: 15px; }
 
         .btn-skillup {
             background-color: #00b359;
@@ -76,7 +75,6 @@
             width: 100%;
             margin-top: 10px;
         }
-
         .btn-skillup:hover { background-color: #008f47; color: white; }
 
         .otp-input-container {
@@ -104,8 +102,6 @@
             margin: 25px 0;
         }
         .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #e2e8f0; }
-        .divider:not(:empty)::before { margin-right: .5em; }
-        .divider:not(:empty)::after { margin-left: .5em; }
 
         .btn-google {
             border: 1px solid #e2e8f0;
@@ -127,7 +123,6 @@
     <div id="navbar"></div>
 
     <div class="auth-wrapper">
-        
         <div class="auth-card text-center" id="signupCard">
             <div class="brand-logo-circle">S</div>
             <h2>Create Account</h2>
@@ -164,7 +159,7 @@
             </button>
             
             <p class="mt-4 mb-0" style="font-size: 0.85rem; color: #64748b;">
-                Already have an account? <a href="#" class="text-success text-decoration-none fw-bold">Sign in</a>
+                Already have an account? <a href="login.html" class="text-success text-decoration-none fw-bold">Sign in</a>
             </p>
         </div>
 
@@ -212,6 +207,11 @@
                 const pass = $('#password').val();
 
                 if(name && email && pass.length >= 8) {
+                    // --- SAVE DATA FOR LOGIN MATCHING ---
+                    localStorage.setItem('userEmail', email);
+                    localStorage.setItem('userPassword', pass);
+                    localStorage.setItem('userName', name); // Optional: Save name for dashboard welcome
+
                     generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
                     
                     // Switch Screens
@@ -224,7 +224,7 @@
                     }, 500); 
                     
                 } else {
-                    alert("Please fill in all details correctly.");
+                    alert("Please fill in all details correctly (Password min 8 chars).");
                 }
             });
 

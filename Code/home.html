@@ -34,7 +34,7 @@
       </p>
       <div class="d-flex justify-content-center gap-3">
         <button class="btn btn-green rounded-3">Get Started Free</button>
-        <button class="btn btn-outline-green rounded-3">Learn More</button>
+        <button class="btn btn-outline-green rounded-4">Learn More</button>
       </div>
     </section>
 
@@ -219,7 +219,7 @@
             <div class="price-text">
               $0<span class="fs-6 text-muted fw-normal">/month</span>
             </div>
-            <button class="btn btn-green w-100 mt-4 rounded-3">
+            <button class="btn btn-green w-100 mt-4 rounded-5">
               View Details
             </button>
           </div>
@@ -230,7 +230,7 @@
             <div class="price-text">
               $29<span class="fs-6 text-muted fw-normal">/month</span>
             </div>
-            <button class="btn btn-green w-100 mt-4 rounded-3">
+            <button class="btn btn-green w-100 mt-4 rounded-5">
               View Details
             </button>
           </div>
@@ -241,7 +241,7 @@
             <div class="price-text">
               $99<span class="fs-6 text-muted fw-normal">/month</span>
             </div>
-            <button class="btn btn-green w-100 mt-4 rounded-3">
+            <button class="btn btn-green w-100 mt-4 rounded-5">
               View Details
             </button>
           </div>
@@ -293,6 +293,15 @@
         // Load components
         $("#navbar").load("components/navbar.html");
         $("#footer").load("components/footer.html");
+      });
+      $(".rounded-3").click(function() {
+        window.location.href = "signup.html";
+      });
+      $(".rounded-4").click(function() {
+        window.location.href = "about.html";
+      });
+      $(".rounded-5").click(function() {
+        window.location.href = "pricing.html";
       });
     </script>
   </body>
