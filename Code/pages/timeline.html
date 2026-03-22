@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillUp - My Timeline</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        .main-wrapper {
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }
+
+        /* Stat Cards */
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .stat-value { font-size: 2rem; font-weight: 700; color: #10b981; }
+        .stat-label { font-size: 0.85rem; color: #64748b; font-weight: 500; }
+
+        /* Timeline Container */
+        .timeline-container {
+            position: relative;
+            padding-left: 50px;
+        }
+
+        /* The Vertical Line */
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 19px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e2e8f0;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -50px;
+            width: 40px;
+            height: 40px;
+            background: #10b981;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            z-index: 2;
+        }
+
+        .date-label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
+            transition: transform 0.2s;
+        }
+
+        .activity-card:hover { transform: translateX(5px); }
+
+        .activity-card.in-progress {
+            border: 2px solid #3b82f6;
+            background: #eff6ff;
+        }
+
+        .icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        /* Sidebar Cards */
+        .sidebar-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+
+        .weekly-notif {
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .streak-card {
+            background: #10b981;
+            color: white;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .streak-grid {
+            display: flex;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .streak-day {
+            flex: 1;
+            height: 30px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .streak-day.active { background: white; }
+
+        /* Sticky Logic class */
+        .sticky-sidebar {
+            position: sticky;
+            top: 100px; /* Space for navbar */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="navPrivate"></div>
+
+    <div class="main-wrapper">
+        <main class="container">
+            <div class="mb-5">
+                <h1 class="fw-bold mb-1">My Timeline</h1>
+                <p class="text-secondary">Track your learning journey and achievements</p>
+            </div>
+
+            <div class="row g-4 mb-5">
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-value">47</div>
+                        <div class="stat-label">Total Days Active</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Courses Completed</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">Achievements</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-value text-success">15 days</div>
+                        <div class="stat-label">Current Streak</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-5">
+                <div class="col-lg-8">
+                    <h5 class="fw-bold mb-4"><i class="bi bi-calendar-event me-2 text-success"></i>Activity Timeline</h5>
+                    <div class="timeline-container">
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-dot"><i class="bi bi-calendar-check"></i></div>
+                            <span class="date-label">March 19, 2026 <span class="badge bg-primary-subtle text-primary ms-2">Today</span></span>
+                            <div class="activity-card in-progress">
+                                <div class="icon-box bg-white text-primary shadow-sm"><i class="bi bi-clock-history"></i></div>
+                                <div>
+                                    <strong class="d-block">In Progress: Advanced React Patterns</strong>
+                                    <span class="text-secondary small">Currently working on custom hooks and context patterns</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"><i class="bi bi-calendar-check"></i></div>
+                            <span class="date-label">March 15, 2026</span>
+                            <div class="activity-card">
+                                <div class="icon-box bg-success-subtle text-success"><i class="bi bi-check2-circle"></i></div>
+                                <div>
+                                    <strong class="d-block">Completed: React State Management</strong>
+                                    <span class="text-secondary small">Mastered Redux and Redux Toolkit</span>
+                                </div>
+                            </div>
+                            <div class="activity-card">
+                                <div class="icon-box bg-warning-subtle text-warning"><i class="bi bi-trophy"></i></div>
+                                <div>
+                                    <strong class="d-block">Achievement Unlocked: React Master</strong>
+                                    <span class="text-secondary small">Completed all React fundamentals courses</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"><i class="bi bi-calendar-check"></i></div>
+                            <span class="date-label">March 10, 2026</span>
+                            <div class="activity-card">
+                                <div class="icon-box bg-purple-subtle text-primary" style="background: #f3e8ff;"><i class="bi bi-briefcase"></i></div>
+                                <div>
+                                    <strong class="d-block">Applied to 5 positions</strong>
+                                    <span class="text-secondary small">Submitted applications for Frontend Developer roles</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-dot"><i class="bi bi-calendar-check"></i></div>
+                            <span class="date-label">February 28, 2026</span>
+                            <div class="activity-card">
+                                <div class="icon-box bg-info-subtle text-info"><i class="bi bi-book"></i></div>
+                                <div>
+                                    <strong class="d-block">Started: React.js Fundamentals</strong>
+                                    <span class="text-secondary small">Began learning React framework</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="sticky-sidebar" id="timelineSidebar">
+                        
+                        <div class="sidebar-card">
+                            <h6 class="fw-bold mb-3">This Week</h6>
+                            
+                            <div class="weekly-notif" style="background: #ecfdf5; border: 1px solid #d1fae5;">
+                                <i class="bi bi-check-circle text-success"></i>
+                                <div>
+                                    <strong class="d-block">3 Courses Completed</strong>
+                                    <span class="text-secondary smaller">You're on fire this week!</span>
+                                </div>
+                            </div>
+
+                            <div class="weekly-notif" style="background: #eff6ff; border: 1px solid #dbeafe;">
+                                <i class="bi bi-clock text-primary"></i>
+                                <div>
+                                    <strong class="d-block">12 Hours Learning</strong>
+                                    <span class="text-secondary smaller">20% above your weekly goal</span>
+                                </div>
+                            </div>
+
+                            <div class="weekly-notif" style="background: #fffbeb; border: 1px solid #fef3c7;">
+                                <i class="bi bi-trophy text-warning"></i>
+                                <div>
+                                    <strong class="d-block">2 New Achievements</strong>
+                                    <span class="text-secondary smaller">Keep up the great work!</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="streak-card">
+                            <p class="small mb-1 opacity-75">Current Streak</p>
+                            <h2 class="fw-bold mb-0">15</h2>
+                            <p class="small">Days in a row</p>
+                            
+                            <div class="streak-grid">
+                                <div class="streak-day"></div>
+                                <div class="streak-day"></div>
+                                <div class="streak-day active"></div>
+                                <div class="streak-day active"></div>
+                                <div class="streak-day active"></div>
+                                <div class="streak-day active"></div>
+                                <div class="streak-day active"></div>
+                            </div>
+                            
+                            <p class="smaller mb-0 opacity-75 text-center">Keep learning daily to maintain your streak!</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="footer"></div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Load shared components
+            $("#navPrivate").load("../components/navPrivate.html");
+            $("#footer").load("../components/footer.html");
+
+            // jQuery Sticky Sidebar adjustment (optional manual offset control)
+            $(window).scroll(function() {
+                var windowTop = $(window).scrollTop();
+                var sidebar = $('#timelineSidebar');
+                
+                // You can add logic here if you want to stop the sticky 
+                // before it hits the footer
+            });
+        });
+    </script>
+</body>
+</html>

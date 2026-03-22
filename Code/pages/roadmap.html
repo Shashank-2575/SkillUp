@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillUp - Personalized Roadmap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            padding: 40px 0;
+        }
+        #navPrivate {
+            margin-bottom: 30px;
+        }
+        #footer {
+            margin-top: 30px;
+        }
+        .su-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 40px;
+            border: none;
+        }
+
+        .section-title { font-weight: 700; color: #1e293b; margin-bottom: 20px; }
+        
+        /* Form Styling */
+        .form-label { font-weight: 600; font-size: 0.9rem; color: #475569; margin-top: 20px; }
+        .form-control, .form-select { border-radius: 8px; border: 1px solid #e2e8f0; padding: 12px; }
+        
+        /* Selectable Options (Buttons) */
+        .option-group { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+        .su-option {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        .su-option:hover { background-color: rgba(16, 185, 129, 0.05); border-color: #10b981; }
+        .su-option.selected { background-color: #10b981; color: white; border-color: #10b981; }
+
+        .btn-generate {
+            background-color: #00b359;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 700;
+            width: 100%;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* --- Roadmap View Styles --- */
+        .phase-card {
+            border-radius: 12px;
+            padding: 25px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .phase-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 15px;
+        }
+        .bg-foundation { background-color: #10b981; }
+        .bg-intermediate { background-color: #3b82f6; }
+        .bg-advanced { background-color: #94a3b8; }
+
+        .roadmap-list { list-style: none; padding: 0; }
+        .roadmap-list li { font-size: 0.9rem; color: #64748b; margin-bottom: 8px; position: relative; padding-left: 15px; }
+        .roadmap-list li::before { content: '→'; position: absolute; left: 0; color: #10b981; }
+
+        .progress-bar-custom { height: 10px; border-radius: 10px; background-color: #e2e8f0; overflow: hidden; }
+        .progress-fill { height: 100%; background-color: #10b981; width: 45%; }
+
+        .recommendation-box {
+            background-color: #eff6ff;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        #roadmapView { display: none; }
+    </style>
+</head>
+<body>
+ <div id="navPrivate"></div>
+    <main class="container">
+        <div id="surveyView" class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="su-card text-center mb-4">
+                    <div class="bg-success d-inline-flex p-3 rounded-circle text-white mb-3" style="background-color: #10b981 !important;">
+                        <i class="bi bi-stars fs-4"></i>
+                    </div>
+                    <h1 class="fw-bold">Build Your Personalized Roadmap</h1>
+                    <p class="text-secondary">Answer a few questions to create your customized learning path</p>
+                </div>
+
+                <div class="su-card">
+                    <label class="form-label">Education Level</label>
+                    <select class="form-select">
+                        <option selected disabled>Select...</option>
+                        <option>Student</option>
+                        <option>Graduate</option>
+                        <option>Working Professional</option>
+                    </select>
+
+                    <label class="form-label">Current Field/Industry</label>
+                    <input type="text" class="form-control" placeholder="e.g., Student, Marketing, Engineering, Career Changer">
+
+                    <h5 class="section-title mt-4">Skills Assessment</h5>
+                    
+                    <div class="skill-row mb-3">
+                        <label class="small fw-bold">Programming</label>
+                        <div class="option-group single-select" data-category="programming">
+                            <div class="su-option">Beginner</div>
+                            <div class="su-option">Intermediate</div>
+                            <div class="su-option">Advanced</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-row mb-3">
+                        <label class="small fw-bold">Problem-solving</label>
+                        <div class="option-group single-select" data-category="problem">
+                            <div class="su-option">Beginner</div>
+                            <div class="su-option">Intermediate</div>
+                            <div class="su-option">Advanced</div>
+                        </div>
+                    </div>
+
+                    <label class="form-label">Interests (Select all that apply)</label>
+                    <div class="option-group multi-select">
+                        <div class="su-option">AI & Machine Learning</div>
+                        <div class="su-option">Web Development</div>
+                        <div class="su-option">Data Science</div>
+                        <div class="su-option">DevOps</div>
+                        <div class="su-option">Cloud Computing</div>
+                        <div class="su-option">Cybersecurity</div>
+                    </div>
+
+                    <label class="form-label">Career Goal (Target Role)</label>
+                    <input type="text" id="targetRole" class="form-control" placeholder="e.g., Full-Stack Developer, Data Scientist">
+
+                    <button id="btnGenerate" class="btn-generate">
+                        <i class="bi bi-stars"></i> Generate My Personalized Roadmap
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="roadmapView">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="fw-bold">Your Learning Roadmap</h1>
+                    <p class="text-secondary">Personalized path to become a <span id="displayRole" class="text-dark fw-bold">Developer</span></p>
+                </div>
+                <button class="btn btn-outline-success btn-sm px-3" onclick="location.reload()">Retake Survey</button>
+            </div>
+
+            <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                    <div class="su-card p-4 h-100 d-flex align-items-center">
+                        <div class="bg-success-subtle p-3 rounded-circle me-3">
+                            <i class="bi bi-bullseye text-success"></i>
+                        </div>
+                        <div>
+                            <p class="small text-secondary mb-0">Your Skill Level</p>
+                            <span class="badge bg-success-subtle text-success border border-success px-3">Intermediate</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="su-card p-4 h-100">
+                        <div class="d-flex justify-content-between mb-2">
+                            <p class="small text-secondary mb-0">Overall Progress</p>
+                            <strong class="text-success">45%</strong>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <p class="small text-secondary mt-2 mb-0">10-20 hours dedicated per week</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase-card">
+                <div class="d-flex justify-content-between align-items-start mb-4">
+                    <div class="d-flex align-items-center">
+                        <div class="phase-icon bg-foundation"><i class="bi bi-check-lg"></i></div>
+                        <h4 class="fw-bold mb-0">Foundation Phase</h4>
+                    </div>
+                    <div class="text-end">
+                        <span class="small text-secondary d-block">2-3 months</span>
+                        <span class="badge bg-light text-secondary border">Weeks 1-12</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6 class="fw-bold small">Skills to Master</h6>
+                        <ul class="roadmap-list">
+                            <li>Programming Fundamentals</li>
+                            <li>Problem-solving</li>
+                            <li>Version Control</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="fw-bold small">Tools & Technologies</h6>
+                        <ul class="roadmap-list">
+                            <li>VS Code</li>
+                            <li>Git & GitHub</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="fw-bold small">Projects to Build</h6>
+                        <ul class="roadmap-list">
+                            <li>Personal Portfolio</li>
+                            <li>Calculator App</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase-card">
+                <div class="d-flex justify-content-between align-items-start mb-4">
+                    <div class="d-flex align-items-center">
+                        <div class="phase-icon bg-intermediate"><i class="bi bi-clock-history"></i></div>
+                        <h4 class="fw-bold mb-0">Intermediate Phase</h4>
+                    </div>
+                    <div class="text-end">
+                        <span class="small text-secondary d-block">3-4 months</span>
+                        <span class="badge bg-light text-secondary border">Weeks 13-28</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6 class="fw-bold small">Skills to Master</h6>
+                        <ul class="roadmap-list">
+                            <li>Database Management</li>
+                            <li>API Development</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="fw-bold small">Tools & Technologies</h6>
+                        <ul class="roadmap-list">
+                            <li>React / Angular</li>
+                            <li>PostgreSQL</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="fw-bold small">Projects to Build</h6>
+                        <ul class="roadmap-list">
+                            <li>Full-stack CRUD App</li>
+                            <li>Auth System</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recommendation-box mt-4">
+                <h6 class="fw-bold d-flex align-items-center gap-2 mb-3">
+                    <i class="bi bi-lightning-charge-fill text-primary"></i> Personalized Recommendations
+                </h6>
+                <ul class="small text-secondary mb-0">
+                    <li>Focus on Intermediate Phase to advance your skills</li>
+                    <li>Build at least one project per phase to solidify your learning</li>
+                    <li>Practice consistently with 10-20 commitment per week</li>
+                    <li>Track your progress in the Timeline section regularly</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+ <div id="footer"></div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+         $(document).ready(function () {
+        // Load components
+        $("#navPrivate").load("../components/navPrivate.html");
+        $("#footer").load("../components/footer.html");
+      });
+
+        $(document).ready(function() {
+            // SINGLE SELECT Logic (Levels)
+            $('.single-select .su-option').click(function() {
+                $(this).siblings().removeClass('selected');
+                $(this).addClass('selected');
+            });
+
+            // MULTI SELECT Logic (Interests)
+            $('.multi-select .su-option').click(function() {
+                $(this).toggleClass('selected');
+            });
+
+            // GENERATE Logic
+            $('#btnGenerate').click(function() {
+                const targetRole = $('#targetRole').val() || "Career Goal";
+                
+                // Button loading effect
+                $(this).html('<span class="spinner-border spinner-border-sm"></span> Analyzing data...');
+                
+                setTimeout(() => {
+                    $('#displayRole').text(targetRole);
+                    
+                    // Smooth transition
+                    $('#surveyView').fadeOut(400, function() {
+                        $('#roadmapView').fadeIn(600);
+                        // Scroll to top
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>
