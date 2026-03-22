@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillUp - Pricing</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1e293b;
+            background-color: #fcfdfd;
+            line-height: 1.6;
+        }
+
+        .section-padding { padding: 80px 0; }
+
+        /* Pricing Card Base */
+        .pricing-card {
+            border: none;
+            border-radius: 20px;
+            padding: 40px 30px;
+            background: #fff;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+            height: 100%;
+            border: 1px solid transparent;
+        }
+
+        /* Hover Animation */
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Active/Featured Card (Green) */
+        .pricing-card.active {
+            background-color: #00b359;
+            color: #fff;
+            transform: scale(1.05);
+            z-index: 2;
+        }
+
+        .pricing-card.active .text-secondary, 
+        .pricing-card.active .text-muted {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        .pricing-card.active .btn-outline-custom {
+            background-color: #fff;
+            color: #00b359;
+            border: none;
+        }
+
+        /* Pricing Text Elements */
+        .price-val { font-size: 3rem; font-weight: 800; }
+        .price-currency { font-size: 1.5rem; font-weight: 700; vertical-align: top; margin-top: 10px; display: inline-block; }
+        
+        /* Features List */
+        .feature-list { list-style: none; padding: 0; margin: 30px 0; }
+        .feature-list li { margin-bottom: 12px; font-size: 0.9rem; display: flex; align-items: center; gap: 10px; }
+        .bi-check-lg { color: #10b981; font-weight: bold; }
+        .bi-x-lg { color: #94a3b8; }
+        .active .bi-check-lg { color: #fff; }
+        .active .bi-x-lg { color: rgba(255, 255, 255, 0.5); }
+
+        /* Buttons */
+        .btn-custom {
+            border-radius: 8px;
+            padding: 12px;
+            font-weight: 700;
+            width: 100%;
+            transition: 0.3s;
+        }
+        .btn-green { background-color: #00b359; color: #fff; border: none; }
+        .btn-green:hover { background-color: #008f47; color: #fff; }
+
+        /* Badge */
+        .popular-badge {
+            background: #fff;
+            color: #00b359;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* FAQ Section */
+        .faq-item {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar"></div>
+    <main class="container section-padding">
+        <div class="text-center mb-5">
+            <h1 class="fw-bold mb-3" style="font-size: 2.5rem;">Simple, Transparent Pricing</h1>
+            <p class="text-secondary mx-auto" style="max-width: 600px;">
+                Choose the plan that best fits your career goals. All plans include core features to help you succeed.
+            </p>
+        </div>
+
+        <div class="row g-4 justify-content-center align-items-center mt-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="pricing-card text-center" id="card-free">
+                    <h3 class="fw-bold h5">Free</h3>
+                    <div class="my-3">
+                        <span class="price-currency">$</span><span class="price-val">0</span>
+                        <span class="text-secondary">forever</span>
+                    </div>
+                    <p class="text-muted small">Perfect for getting started</p>
+                    
+                    <ul class="feature-list text-start mx-auto" style="max-width: 220px;">
+                        <li><i class="bi bi-check-lg"></i> Basic career assessment</li>
+                        <li><i class="bi bi-check-lg"></i> 1 AI-generated roadmap</li>
+                        <li><i class="bi bi-check-lg"></i> Access to community resources</li>
+                        <li><i class="bi bi-check-lg"></i> Basic progress tracking</li>
+                        <li class="text-muted"><i class="bi bi-x-lg"></i> Advanced AI recommendations</li>
+                        <li class="text-muted"><i class="bi bi-x-lg"></i> Unlimited roadmaps</li>
+                        <li class="text-muted"><i class="bi bi-x-lg"></i> Priority support</li>
+                        <li class="text-muted"><i class="bi bi-x-lg"></i> Resume builder</li>
+                    </ul>
+                    <button class="btn btn-green btn-custom mt-auto">Get Started</button>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="pricing-card active text-center" id="card-pro">
+                    <span class="popular-badge shadow-sm">Most Popular</span>
+                    <h3 class="fw-bold h5 mt-3">Pro</h3>
+                    <div class="my-3">
+                        <span class="price-currency">$</span><span class="price-val">29</span>
+                        <span class="text-white-50">per month</span>
+                    </div>
+                    <p class="small opacity-75">For serious career builders</p>
+                    
+                    <ul class="feature-list text-start mx-auto" style="max-width: 240px;">
+                        <li><i class="bi bi-check-lg"></i> Advanced career assessment</li>
+                        <li><i class="bi bi-check-lg"></i> Unlimited AI-generated roadmaps</li>
+                        <li><i class="bi bi-check-lg"></i> Personalized course recommendations</li>
+                        <li><i class="bi bi-check-lg"></i> Advanced progress tracking</li>
+                        <li><i class="bi bi-check-lg"></i> Job matching & recommendations</li>
+                        <li><i class="bi bi-check-lg"></i> Resume builder & templates</li>
+                        <li><i class="bi bi-check-lg"></i> Priority email support</li>
+                        <li class="opacity-50"><i class="bi bi-x-lg"></i> 1-on-1 career consultation</li>
+                    </ul>
+                    <button class="btn btn-outline-custom btn-custom mt-auto">Start Pro Trial</button>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="pricing-card text-center" id="card-premium">
+                    <h3 class="fw-bold h5">Premium</h3>
+                    <div class="my-3">
+                        <span class="price-currency">$</span><span class="price-val">99</span>
+                        <span class="text-secondary">per month</span>
+                    </div>
+                    <p class="text-muted small">Ultimate career acceleration</p>
+                    
+                    <ul class="feature-list text-start mx-auto" style="max-width: 230px;">
+                        <li><i class="bi bi-check-lg"></i> Everything in Pro</li>
+                        <li><i class="bi bi-check-lg"></i> Monthly 1-on-1 career consultation</li>
+                        <li><i class="bi bi-check-lg"></i> Custom AI training on your goals</li>
+                        <li><i class="bi bi-check-lg"></i> Direct mentor connections</li>
+                        <li><i class="bi bi-check-lg"></i> Interview preparation tools</li>
+                        <li><i class="bi bi-check-lg"></i> Salary negotiation guidance</li>
+                        <li><i class="bi bi-check-lg"></i> Priority phone & chat support</li>
+                        <li><i class="bi bi-check-lg"></i> Exclusive networking events</li>
+                    </ul>
+                    <button class="btn btn-green btn-custom mt-auto">Contact Sales</button>
+                </div>
+            </div>
+        </div>
+
+        <section class="mt-5 pt-5">
+            <h2 class="text-center fw-bold mb-5">Pricing FAQs</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <div class="faq-item">
+                        <h4 class="h6 fw-bold">Can I switch plans at any time?</h4>
+                        <p class="text-secondary small mb-0">Yes! You can upgrade or downgrade your plan at any time. Changes will be reflected in your next billing cycle.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4 class="h6 fw-bold">What payment methods do you accept?</h4>
+                        <p class="text-secondary small mb-0">We accept all major credit cards, PayPal, and bank transfers for annual plans.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4 class="h6 fw-bold">Is there a free trial for paid plans?</h4>
+                        <p class="text-secondary small mb-0">Yes, both Pro and Premium plans come with a 14-day free trial. No credit card required.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4 class="h6 fw-bold">What happens if I cancel my subscription?</h4>
+                        <p class="text-secondary small mb-0">You'll retain access to paid features until the end of your billing period. Your data is saved for 90 days if you decide to return.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <div id="footer"></div>
+    <script>
+        $(document).ready(function() {
+            // Smooth selection animation with jQuery
+            $('.pricing-card').on('mouseenter', function() {
+                // Remove active class from others and add to current
+                $('.pricing-card').removeClass('active');
+                $(this).addClass('active');
+
+                // Toggle internal button classes to match design
+                $('.pricing-card .btn-custom').addClass('btn-green').removeClass('btn-outline-custom');
+                $(this).find('.btn-custom').removeClass('btn-green').addClass('btn-outline-custom');
+            });
+
+            // Optional: Reset to Pro as the featured card when mouse leaves the section
+            /* $('.row').on('mouseleave', function() {
+                $('.pricing-card').removeClass('active');
+                $('#card-pro').addClass('active');
+            });
+            */
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // Load components
+        $("#navbar").load("components/navbar.html");
+        $("#footer").load("components/footer.html");
+      });
+    </script>
+</body>
+</html>

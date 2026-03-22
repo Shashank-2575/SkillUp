@@ -3,483 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Skillup</title>
+    <title>Contact SkillUp</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
     <style>
-        /* Define the theme colors based on the image */
-        :root {
-            --primary-color: #12b886; /* The green/teal from your image */
-            --dark-color: #111a24; /* The dark navy/black */
-            --light-bg: #f3fcf8; /* Light green-ish background */
-            --border-color: #dae5eb;
-            --text-color: #333;
-            --footer-text: #b5bdc7;
-        }
-
         body {
-            font-family: 'Inter', sans-serif; /* A modern, clean font */
-            background-color: var(--light-bg);
-            color: var(--text-color);
-            margin: 0;
-            overflow-x: hidden; /* Prevent horizontal scrolling during animation */
+            font-family: 'Inter', sans-serif;
+            color: #334155;
+            background-color: #ffffff;
+            line-height: 1.6;
         }
 
-        /* Initial state for the animation - hidden below the view */
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1.5s ease, transform 1s ease;
+        .section-padding {
+            padding: 80px 0;
         }
 
-        /* State after the animation runs - visible */
-        .fade-in-up.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- Custom Header Styles --- */
-        .skillup-header {
-            background-color: transparent;
-            padding: 10px 0;
-        }
-
-        /* Replicating the distinct blue page title in the very top-left corner */
-        .page-title-blue {
-            color: #0b57d0; /* Match the title color in the image */
-            font-weight: bold;
-            font-size: 1.1rem;
-            position: absolute;
-            top: 25px;
-            left: 20px;
-        }
-
-        .navbar-brand {
-            visibility: hidden; /* Hide the title and blue border from the reference, just keeping structural space */
-        }
-
-        .search-bar {
-            background-color: white;
-            border-radius: 20px;
-            border: 1px solid #ced4da;
-            padding: 5px 15px;
-            color: #ccc;
-            font-size: 0.9rem;
-            
-        }
-
-        .explore-dropdown {
-            border-left: 1px solid #ced4da;
-            padding-left: 10px;
-            color: var(--primary-color);
-            margin-left: 10px;
-            font-size: 0.9rem;
-        }
-
-        .nav-link {
-            font-size: 0.9rem;
-            color: var(--text-color);
-            font-weight: 500;
-        }
-
-        .nav-link.active, .nav-link:hover {
-            color: var(--primary-color) !important;
-        }
-
-        /* Registration button styled in theme green */
-        .btn-registration {
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            padding: 7px 20px;
+        /* Contact Form Card */
+        .contact-card {
             border: none;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 40px;
         }
 
-        .btn-registration:hover {
-            background-color: #0fa278;
+        .form-label {
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #475569;
+            margin-bottom: 8px;
         }
 
-        /* --- Main Content / Contact Form Section --- */
-        .contact-container {
-            max-width: 950px; /* Use the exact width from the image */
-            margin: 40px auto 100px auto; /* Centered, with spacing */
-            position: relative;
-            background-color: white;
-            border-radius: 10px;
-            padding: 50px 70px; /* Generous padding like in the picture */
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05); /* Soft, natural shadow */
-        }
-
-        /* The green geometric corner decoration (bottom-left of the image) */
-        .corner-pattern-green {
-            position: fixed;
-            left: -30px;
-            bottom: -30px;
-            width: 200px;
-            opacity: 0.4;
-            z-index: -1;
-        }
-
-        .section-header {
-            color: var(--primary-color);
-            font-size: 1.3rem;
-            font-weight: bold;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-        .section-header::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 3px;
-            background-color: var(--primary-color);
-            margin: 10px auto 0;
-        }
-
-        h3.message-title {
-            font-size: 1.4rem;
-            margin-bottom: 25px;
-            font-weight: 600;
-        }
-
-        /* Bootstrap form control customization to match image input style */
-        .form-control {
+        .form-control, .form-select {
+            border: 1px solid #e2e8f0;
+            padding: 12px 16px;
             border-radius: 8px;
-            border: 1px solid #ced4da;
-            padding: 12px 15px;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-        }
-
-        .form-control::placeholder {
-            color: #aaa;
         }
 
         .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.25rem rgba(18, 184, 134, 0.25);
+            border-color: #10b981;
+            box-shadow: 0 0 0 0.25 row rgba(16, 185, 129, 0.1);
         }
 
-        textarea.form-control {
-            height: 120px;
-        }
-
-        /* Form labels for input fields */
-        label.form-label {
-            position: absolute;
-            background-color: white;
-            padding: 0 5px;
-            left: 20px;
-            top: -10px;
-            font-size: 0.8rem;
-            color: #777;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .form-group-relative {
-            position: relative;
-        }
-
-        /* Green send button */
-        .btn-send {
-            background-color: var(--primary-color);
+        .btn-skillup {
+            background-color: #00a854;
             color: white;
-            border-radius: 5px;
-            font-size: 1rem;
-            width: 100%;
-            padding: 12px;
             border: none;
-            transition: background-color 0.3s;
-        }
-
-        .btn-send:hover {
-            background-color: #0fa278;
-        }
-
-        /* Contact details section (right side) */
-        .contact-details {
-            font-size: 0.9rem;
-            color: #6c757d;
-            line-height: 1.8;
-            border-left: 1px solid #ddd;
-            padding-left: 40px;
-        }
-
-        .contact-details p {
-            margin-bottom: 8px;
-        }
-
-        .phone-link, .email-link {
-            color: #0b57d0; /* Light blue links from image */
-            text-decoration: none;
-        }
-
-        /* Social media icon block */
-        .social-icons-contact {
-            margin-top: 20px;
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-icons-contact a {
-            color: #333; /* Darker grey/black in image */
-            font-size: 1.1rem;
-            transition: color 0.3s;
-        }
-
-        .social-icons-contact a:hover {
-            color: var(--primary-color);
-        }
-
-        /* --- Footer Styles --- */
-        .skillup-footer {
-            background-color: var(--dark-color);
-            color: var(--footer-text);
-            font-size: 0.8rem;
-            padding: 60px 0 20px;
-            margin-top: auto;
-        }
-
-        .footer-heading {
-            color: white;
+            padding: 12px;
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        .footer-links-list ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .footer-links-list a {
-            color: var(--footer-text);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 8px;
-            transition: color 0.3s;
-        }
-
-        .footer-links-list a:hover {
+        .btn-skillup:hover {
+            background-color: #008f47;
             color: white;
         }
 
-        /* The small 'New' badge next to 'Press' in the footer */
-        .badge-new {
-            background-color: white;
-            color: var(--dark-color);
-            border-radius: 10px;
-            font-size: 0.7rem;
-            padding: 1px 6px;
-            margin-left: 5px;
-            vertical-align: middle;
+        /* Contact Info Styling */
+        .info-item {
+            display: flex;
+            margin-bottom: 24px;
         }
 
-        .divider-line {
-            height: 1px;
-            background-color: #333;
-            margin: 40px 0 20px;
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #ecfdf5;
+            color: #10b981;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-right: 16px;
+            flex-shrink: 0;
         }
 
-        .social-icons-footer a {
-            color: var(--footer-text);
-            margin-left: 20px;
+        .info-title {
+            font-weight: 700;
             font-size: 1rem;
-            transition: color 0.3s;
+            margin-bottom: 4px;
+            color: #1e293b;
         }
 
-        .social-icons-footer a:hover {
-            color: white;
+        .info-text {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 0;
         }
 
-        /* Responsiveness for mobile */
-        @media (max-width: 991px) {
-            .contact-container {
-                padding: 30px;
-                margin: 20px;
-            }
-            .contact-details {
-                border-left: none;
-                padding-left: 0;
-                margin-top: 40px;
-                padding-top: 30px;
-                border-top: 1px solid #ddd;
-            }
+        /* Office Hours Box */
+        .hours-box {
+            background-color: #f0fdf4;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 40px;
         }
-        inputinput[type="text"] {
-  border: 2px solid rgb(94, 94, 172);
-  height: 40px;
-}
+
+        .hours-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .hours-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .day-label {
+            color: #475569;
+        }
+
+        .time-label {
+            font-weight: 600;
+            color: #1e293b;
+        }
     </style>
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body>
+    <div id="navbar"></div>
+    <main class="container section-padding">
+        <div class="text-center mb-5">
+            <h1 class="fw-bold mb-3" style="font-size: 2.5rem; color: #1e293b;">Get In Touch</h1>
+            <p class="text-secondary mx-auto" style="max-width: 600px;">
+                Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+            </p>
+        </div>
 
-    <svg class="corner-pattern-green" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="0" width="100" height="100" fill="url(#pattern0)" />
-        <defs>
-            <pattern id="pattern0" patternUnits="userSpaceOnUse" width="100" height="100">
-                <rect width="100" height="100" fill="transparent"/>
-                <circle cx="10" cy="10" r="1" fill="#c3efdd" />
-                <circle cx="30" cy="10" r="1" fill="#c3efdd" />
-                <circle cx="50" cy="10" r="1" fill="#c3efdd" />
-                <circle cx="10" cy="30" r="1" fill="#c3efdd" />
-                <circle cx="30" cy="30" r="1" fill="#c3efdd" />
-                <circle cx="50" cy="30" r="1" fill="#c3efdd" />
-            </pattern>
-        </defs>
-    </svg>
-
-    <div class="page-title-blue">Contact us</div>
-
-    <header class="skillup-header fade-in-up">
-        <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid px-lg-5">
-                <form class="d-flex search-bar align-items-center">
-                    <i class="fas fa-search"></i>
-                    <input class="form-control border-0 bg-transparent text-muted" type="search" placeholder="Want to learn?" style="font-size:0.8rem">
-                    <span class="explore-dropdown">Explore <i class="fas fa-chevron-down ms-1"></i></span>
-                </form>
-                
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                
-                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <ul class="navbar-nav align-items-center gap-3">
-                        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">About us</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="#">Contact us</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Sign in</a></li>
-                        <li class="nav-item">
-                            <button class="btn btn-registration" type="button">Registration</button>
-                        </li>
-                    </ul>
+        <div class="row g-5 align-items-start mt-2">
+            <div class="col-lg-6">
+                <div class="card contact-card">
+                    <h2 class="h4 fw-bold mb-4">Send us a message</h2>
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Your Name</label>
+                            <input type="text" class="form-control" placeholder="John Doe">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control" placeholder="you@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Subject</label>
+                            <select class="form-select text-secondary">
+                                <option selected>Select a subject</option>
+                                <option value="1">General Inquiry</option>
+                                <option value="2">Technical Support</option>
+                                <option value="3">Partnership</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">Message</label>
+                            <textarea class="form-control" rows="5" placeholder="Tell us how we can help you..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-skillup">
+                            <i class="bi bi-send-fill"></i> Send Message
+                        </button>
+                    </form>
                 </div>
             </div>
-        </nav>
-    </header>
 
-    <main class="flex-grow-1">
-        <div class="container container-950 px-0 fade-in-up">
-            <div class="contact-container shadow">
-                <div class="section-header">CONTACT US</div>
+            <div class="col-lg-6 ps-lg-5">
+                <div class="contact-info-content">
+                    <h2 class="h4 fw-bold mb-3">Contact Information</h2>
+                    <p class="text-secondary mb-5">
+                        Feel free to reach out to us through any of these channels. We're here to help you with your career journey.
+                    </p>
 
-                <div class="row">
-                    <div class="col-lg-7 px-lg-4">
-                        <h3 class="message-title">Leave us a message</h3>
-                        <form>
-                            <div class="form-group-relative">
-                                <label for="nameInput" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="nameInput" placeholder="First_Name Last_Name">
-                            </div>
-                            <div class="form-group-relative">
-                                <label for="emailInput" class="form-label">Email Address</label>
-                                <input type="email" class="form-control" id="emailInput" placeholder="Enter email">
-                            </div>
-                            <div class="form-group-relative">
-                                <label for="messageInput" class="form-label">Your Message</label>
-                                <textarea class="form-control" id="messageInput" placeholder="Type message..."></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-send">Send</button>
-                        </form>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="bi bi-envelope"></i>
+                        </div>
+                        <div>
+                            <h3 class="info-title">Email</h3>
+                            <p class="info-text">support@skillup.ai</p>
+                            <p class="info-text">partnerships@skillup.ai</p>
+                        </div>
                     </div>
 
-                    <div class="col-lg-5 px-lg-4">
-                        <div class="contact-details">
-                            <p>Weekend UX</p>
-                            <p>B 37/3 Ground Floor Double</p>
-                            <p>StoryRamesh Nagar , Near Raja Garden</p>
-                            <p>Chowk.Delhi: 110015</p>
-                            <p class="pt-2"><a href="tel:+919599272754" class="phone-link">+91 9599272754</a></p>
-                            <p><a href="mailto:hello@skillup.com" class="email-link">hello@skillup.com</a></p>
-                            
-                            <div class="social-icons-contact">
-                                <a href="#"><i class="fab fa-youtube"></i></a>
-                                <a href="#"><i class="fab fa-instagram"></i></a>
-                                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                            </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="bi bi-telephone"></i>
+                        </div>
+                        <div>
+                            <h3 class="info-title">Phone</h3>
+                            <p class="info-text">+1 (555) 123-4567</p>
+                            <p class="info-text" style="font-size: 0.85rem;">Mon-Fri 9am-6pm PST</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="bi bi-geo-alt"></i>
+                        </div>
+                        <div>
+                            <h3 class="info-title">Office</h3>
+                            <p class="info-text">123 Innovation Drive</p>
+                            <p class="info-text">San Francisco, CA 94105</p>
+                            <p class="info-text">United States</p>
+                        </div>
+                    </div>
+
+                    <div class="hours-box">
+                        <h3 class="info-title mb-3">Office Hours</h3>
+                        <div class="hours-row">
+                            <span class="day-label">Monday - Friday</span>
+                            <span class="time-label">9:00 AM - 6:00 PM</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="day-label">Saturday</span>
+                            <span class="time-label">10:00 AM - 4:00 PM</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="day-label">Sunday</span>
+                            <span class="time-label">Closed</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-
-    <footer class="skillup-footer">
-        <div class="container px-lg-5">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <p class="pe-lg-3" style="line-height:1.6">Top learning experiences that create more talent in the world.</p>
-                </div>
-                <div class="col-lg-2 col-md-3 col-6 mb-4 footer-links-list">
-                    <h6 class="footer-heading">Product</h6>
-                    <ul>
-                        <li><a href="#">Overview</a></li>
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Solutions</a></li>
-                        <li><a href="#">Tutorials</a></li>
-                        <li><a href="#">Pricing</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-3 col-6 mb-4 footer-links-list">
-                    <h6 class="footer-heading">Company</h6>
-                    <ul>
-                        <li><a href="#">About us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Press <span class="badge-new">New</span></a></li>
-                        <li><a href="#">News</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-3 col-6 mb-4 footer-links-list">
-                    <h6 class="footer-heading">Social</h6>
-                    <ul>
-                        <li><a href="#">Twitter</a></li>
-                        <li><a href="#">LinkedIn</a></li>
-                        <li><a href="#">GitHub</a></li>
-                        <li><a href="#">Dribbble</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-3 col-6 mb-4 footer-links-list">
-                    <h6 class="footer-heading">Legal</h6>
-                    <ul>
-                        <li><a href="#">Terms</a></li>
-                        <li><a href="#">Privacy</a></li>
-                        <li><a href="#">Cookies</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="divider-line"></div>
-            <div class="d-flex flex-wrap justify-content-between align-items-center">
-                <p class="mb-0 text-muted">© 2026 - 2028 skillup.</p>
-                <div class="social-icons-footer mt-2 mt-sm-0">
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-github"></i></a>
-                    <a href="#"><i class="fab fa-dribbble"></i></a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.bundle.min.css"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <div id="footer"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
-        $(document).ready(function() {
-            // After the DOM is fully loaded, make elements visible and slide them up
-            setTimeout(function() {
-                $('.fade-in-up').addClass('active');
-            }, 100); // Small delay before animation starts
-        });
+      $(document).ready(function () {
+        // Load components
+        $("#navbar").load("components/navbar.html");
+        $("#footer").load("components/footer.html");
+      });
     </script>
 </body>
 </html>

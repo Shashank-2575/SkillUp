@@ -1,48 +1,269 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign up</title>
-    <link rel="stylesheet" href="css/signup.css">
+    <title>SkillUp - Authentication</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensures footer stays at bottom */
+        }
+
+        /* Centering Wrapper for the Auth Cards */
+        .auth-wrapper {
+            flex-grow: 1; /* Takes up all space between navbar and footer */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            border: none;
+        }
+
+        .brand-logo-circle {
+            width: 48px;
+            height: 48px;
+            background-color: #00b359;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin: 0 auto 20px;
+        }
+
+        .brand-logo-circle.verify-icon {
+            background-color: transparent;
+            border: 2px solid #00b359;
+            color: #00b359;
+        }
+
+        h2 { font-weight: 700; color: #1e293b; margin-bottom: 8px; }
+        .subtitle { color: #64748b; font-size: 0.9rem; margin-bottom: 30px; }
+
+        .form-label { font-weight: 500; font-size: 0.85rem; color: #475569; margin-bottom: 6px; }
+        .input-group-text { background: white; border-right: none; color: #94a3b8; }
+        .form-control { border-left: none; padding: 12px; border-radius: 8px; font-size: 0.95rem; }
+        .form-control:focus { box-shadow: none; border-color: #dee2e6; }
+        .input-group { border: 1px solid #dee2e6; border-radius: 8px; margin-bottom: 15px; }
+
+        .btn-skillup {
+            background-color: #00b359;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-skillup:hover { background-color: #008f47; color: white; }
+
+        .otp-input-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        .otp-field {
+            width: 45px;
+            height: 55px;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin: 25px 0;
+        }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #e2e8f0; }
+        .divider:not(:empty)::before { margin-right: .5em; }
+        .divider:not(:empty)::after { margin-left: .5em; }
+
+        .btn-google {
+            border: 1px solid #e2e8f0;
+            background: white;
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #475569;
+        }
+    </style>
 </head>
 <body>
-    <form action="" class="container">
 
-        <div class="logo">
-            <img src="../20260304_133453.png" alt="Logo">
+    <div id="navbar"></div>
+
+    <div class="auth-wrapper">
+        
+        <div class="auth-card text-center" id="signupCard">
+            <div class="brand-logo-circle">S</div>
+            <h2>Create Account</h2>
+            <p class="subtitle">Start your career journey today</p>
+            
+            <form id="signupForm" class="text-start">
+                <label class="form-label">Full Name</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" class="form-control" id="fullName" placeholder="John Doe" required>
+                </div>
+                
+                <label class="form-label">Email Address</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+                </div>
+                
+                <label class="form-label">Password</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    <input type="password" class="form-control" id="password" placeholder="••••••••" required>
+                </div>
+                <p style="font-size: 0.75rem; color: #94a3b8;" class="mb-4">Must be at least 8 characters</p>
+                
+                <button type="submit" class="btn btn-skillup">Send OTP</button>
+            </form>
+            
+            <div class="divider">Or sign up with</div>
+            
+            <button class="btn btn-google">
+                <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" width="18" alt="Google">
+                Sign up with Google
+            </button>
+            
+            <p class="mt-4 mb-0" style="font-size: 0.85rem; color: #64748b;">
+                Already have an account? <a href="#" class="text-success text-decoration-none fw-bold">Sign in</a>
+            </p>
         </div>
 
-        <div class="head">
-
-        <h1>Create your Account</h1>
+        <div class="auth-card text-center d-none" id="verifyCard">
+            <div class="brand-logo-circle verify-icon">
+                <i class="bi bi-shield-check"></i>
             </div>
-
-        <div class="input_group">
-            <label for="username">Username:</label>
-            <input type="text" placeholder="username">
-
-            <label for="email">Email:</label>
-            <input type="email" placeholder="email">
-
-            <label for="pass">Password:</label>
-            <input type="password" placeholder=" create password">
-
-            <label for="cpass">confirm Password:</label>
-            <input type="password" placeholder="confirm password">
+            <h2>Verify Your Email</h2>
+            <p class="subtitle">We've sent a 6-digit code to your email address</p>
+            
+            <div class="otp-input-container">
+                <input type="text" class="otp-field" maxlength="1">
+                <input type="text" class="otp-field" maxlength="1">
+                <input type="text" class="otp-field" maxlength="1">
+                <input type="text" class="otp-field" maxlength="1">
+                <input type="text" class="otp-field" maxlength="1">
+                <input type="text" class="otp-field" maxlength="1">
+            </div>
+            
+            <button type="button" id="btnVerify" class="btn btn-skillup">Verify & Continue</button>
+            
+            <p class="mt-4 mb-0" style="font-size: 0.85rem; color: #64748b;">
+                Didn't receive the code? <a href="javascript:void(0)" id="resendBtn" class="text-success text-decoration-none fw-bold">Resend</a>
+            </p>
         </div>
+    </div>
 
-       <div class="options">
-         <input type="checkbox" name="" id=""> i agree to the <a href="">Terms and Conditions</a>
+    <div id="footer"></div>
 
-       </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Load components
+            $("#navbar").load("components/navbar.html");
+            $("#footer").load("components/footer.html");
 
-       <button class="sign-up">Sign Up</button>
+            let generatedOTP = "";
+            
+            // 1. Handling Sign Up Submission
+            $('#signupForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                const name = $('#fullName').val();
+                const email = $('#email').val();
+                const pass = $('#password').val();
 
-       <p>Or</p>
+                if(name && email && pass.length >= 8) {
+                    generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+                    
+                    // Switch Screens
+                    $('#signupCard').addClass('d-none');
+                    $('#verifyCard').removeClass('d-none');
 
-       <button class="g-btn">
-        <img src="../google_logo.png" alt="">
-        Login with your google account</button>
-    </form>
+                    // Alert with delay
+                    setTimeout(function() {
+                        alert("Your SkillUp verification code is: " + generatedOTP + "\n\nPlease enter this code to continue.");
+                    }, 500); 
+                    
+                } else {
+                    alert("Please fill in all details correctly.");
+                }
+            });
+
+            // 2. OTP Input Auto-focus
+            $('.otp-field').on('input', function() {
+                if (this.value.length === 1) {
+                    $(this).next('.otp-field').focus();
+                }
+            });
+
+            $('.otp-field').on('keydown', function(e) {
+                if (e.key === "Backspace" && this.value.length === 0) {
+                    $(this).prev('.otp-field').focus();
+                }
+            });
+
+            // 3. Verify OTP Logic
+            $('#btnVerify').on('click', function() {
+                let enteredOTP = "";
+                $('.otp-field').each(function() {
+                    enteredOTP += $(this).val();
+                });
+
+                if (enteredOTP === generatedOTP) {
+                    alert("Verification Successful!");
+                    window.location.href = "pages/dashboard.html";
+                } else {
+                    alert("Invalid OTP. Please try again.");
+                    $('.otp-field').val(""); 
+                    $('.otp-field').first().focus();
+                }
+            });
+
+            // 4. Resend Logic
+            $('#resendBtn').on('click', function() {
+                generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+                alert("New SkillUp verification code is: " + generatedOTP);
+            });
+        });
+    </script>
 </body>
 </html>
