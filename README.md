@@ -17,7 +17,22 @@ This project was developed as part of the Innovative Assignment submission.
 **Project Type:** AI-Driven Career Guidance Website  
 
 
-## 👥 Team Members
+## 👥 TEAM DETAILS
+
+### 💻 Frontend Development Team  
+**Role:** Frontend Developer (HTML, CSS, JavaScript, jQuery)
+
+- Member 1 Brijendra Baghel — Enrollment No: 2401030400012  
+- Member 2 Shashank Mishra — Enrollment No: 2401030400007  
+- Member 3 Dhruv Panchal — Enrollment No: 2401030400004  
+
+---
+
+### 🎨 Design & Documentation Team  
+**Role:** UI/UX Designer (Figma) + Documentation  
+
+- Member 4 Urmila Bagda — Enrollment No: 2401030400015  
+- Member 5 Sejal Khant — Enrollment No: 2401030400008
 
 
 
@@ -74,7 +89,7 @@ This project was developed as part of the Innovative Assignment submission.
 ## 📚 Academic Submission Tasks Covered
 
 ✔ Git repository creation  
-✔ Figma prototype (8–10 screens)  
+✔ Figma prototype
 ✔ Website development using required technologies  
 ✔ Proper folder organization  
 ✔ Code uploaded in respective folders  
