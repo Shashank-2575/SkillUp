@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillUp Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --su-green: #10b981;
+            --su-green-light: #ecfdf5;
+            --su-dark: #1f2937;
+            --su-gray-700: #374151;
+            --su-gray-500: #6b7280;
+            --su-gray-300: #d1d5db;
+            --su-gray-100: #f3f4f6;
+            --su-bg: #f9fafb;
+            
+            /* Icon colors */
+            --icon-progress: #10b981;
+            --icon-goals: #3b82f6;
+            --icon-courses: #a855f7;
+            --icon-jobs: #f97316;
+            
+            --icon-progress-bg: #ecfdf5;
+            --icon-goals-bg: #eff6ff;
+            --icon-courses-bg: #f3e8ff;
+            --icon-jobs-bg: #fff7ed;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--su-bg);
+            color: var(--su-dark);
+        }
+        
+        #navPrivate {
+            margin-bottom: 20px;
+        }
+        #footer {
+            margin-top: 20px;
+        }
+        /* --- Global Component Classes --- */
+        .su-card {
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid var(--su-gray-100);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            padding: 24px;
+        }
+
+        .su-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #000;
+        }
+
+        .text-muted {
+            color: var(--su-gray-500) !important;
+        }
+
+        /* --- Stat Cards --- */
+        .stat-card {
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #000;
+            margin-bottom: 8px;
+        }
+
+        .stat-meta {
+            font-size: 0.8rem;
+        }
+
+        /* --- AI Assistant --- */
+        #ai-assistant-card {
+            position: relative;
+        }
+
+        .ai-header-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--su-green);
+            color: #fff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        #ai-input-container {
+            position: relative;
+        }
+
+        #ai-user-input {
+            border-radius: 8px;
+            border: 1px solid var(--su-gray-300);
+            padding: 12px 50px 12px 16px;
+        }
+
+        #ai-user-input:focus {
+            border-color: var(--su-green);
+            box-shadow: 0 0 0 1px var(--su-green);
+        }
+
+        #ai-send-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--su-gray-500);
+            padding: 0;
+            cursor: pointer;
+        }
+
+        #ai-send-btn:hover {
+            color: var(--su-green);
+        }
+
+        .suggestion-chip {
+            background-color: #fff;
+            border: 1px solid var(--su-gray-300);
+            border-radius: 8px;
+            padding: 10px 16px;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .suggestion-chip:hover {
+            border-color: var(--su-green);
+            background-color: var(--su-green-light);
+        }
+
+        /* AI Thinking Animation */
+        #ai-thinking {
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dot-pulse {
+            position: relative;
+            left: -9999px;
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            background-color: var(--su-green);
+            color: var(--su-green);
+            box-shadow: 9999px 0 0 0 var(--su-green);
+            animation: dotPulse 1.5s infinite linear;
+            animation-delay: .25s;
+        }
+
+        .dot-pulse::before, .dot-pulse::after {
+            content: '';
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            background-color: var(--su-green);
+            color: var(--su-green);
+        }
+
+        .dot-pulse::before {
+            box-shadow: 9984px 0 0 0 var(--su-green);
+            animation: dotPulseBefore 1.5s infinite linear;
+            animation-delay: 0s;
+        }
+
+        .dot-pulse::after {
+            box-shadow: 10014px 0 0 0 var(--su-green);
+            animation: dotPulseAfter 1.5s infinite linear;
+            animation-delay: .5s;
+        }
+
+        @keyframes dotPulseBefore {
+            0% { box-shadow: 9984px 0 0 -5px var(--su-green); }
+            30% { box-shadow: 9984px 0 0 2px var(--su-green); }
+            60%, 100% { box-shadow: 9984px 0 0 -5px var(--su-green); }
+        }
+
+        @keyframes dotPulse {
+            0% { box-shadow: 9999px 0 0 -5px var(--su-green); }
+            30% { box-shadow: 9999px 0 0 2px var(--su-green); }
+            60%, 100% { box-shadow: 9999px 0 0 -5px var(--su-green); }
+        }
+
+        @keyframes dotPulseAfter {
+            0% { box-shadow: 10014px 0 0 -5px var(--su-green); }
+            30% { box-shadow: 10014px 0 0 2px var(--su-green); }
+            60%, 100% { box-shadow: 10014px 0 0 -5px var(--su-green); }
+        }
+
+        /* AI Response */
+        #ai-response {
+            margin-top: 24px;
+            border-top: 1px solid var(--su-gray-100);
+            padding-top: 16px;
+        }
+        
+        #ai-response p {
+            font-size: 0.95rem;
+            color: var(--su-gray-700);
+        }
+
+        /* --- Quick Actions --- */
+        .action-card {
+            border: 1px solid var(--su-gray-300);
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .action-card:hover {
+            border-color: var(--su-green) !important;
+            box-shadow: 0 0 0 1px var(--su-green);
+        }
+
+        .action-card .bi-arrow-right {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--su-gray-500);
+            font-size: 1.1rem;
+        }
+        
+        .action-card:hover .bi-arrow-right {
+            color: var(--su-green);
+        }
+
+        .action-card strong {
+            font-weight: 600;
+            color: #000;
+        }
+
+        .action-card p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--su-gray-500);
+        }
+
+        /* --- Recent Activity --- */
+        .activity-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .activity-item .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--su-green);
+            margin-top: 7px;
+        }
+
+        .activity-item p {
+            margin: 0;
+            color: #000;
+        }
+
+        .activity-item small {
+            color: var(--su-gray-500);
+        }
+
+        /* --- Recommendations --- */
+        .rec-item {
+            cursor: pointer;
+            position: relative;
+            padding: 16px;
+            transition: all 0.3s;
+        }
+        
+        .rec-item strong {
+            font-weight: 600;
+            color: #000;
+        }
+        
+        .rec-item p {
+            color: var(--su-gray-500);
+        }
+
+        .rec-icon {
+            font-size: 1.25rem;
+            margin-right: 12px;
+        }
+        
+        .rec-item:hover {
+            background-color: rgba(16, 185, 129, 0.1) !important; /* Extremely pale green */
+        }
+        
+        .rec-item::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -1px;
+            height: 1px;
+            background-color: var(--su-gray-100);
+        }
+        
+        .rec-item:last-child::after {
+            display: none;
+        }
+
+        .keep-up-card {
+            background-color: var(--su-green-light);
+            border: 1px solid #d1fae5;
+            padding: 16px;
+        }
+    </style>
+</head>
+<body class="py-5">
+<div id="navPrivate"></div>
+<div class="container-fluid px-5">
+    
+    <div class="row mb-5">
+        <div class="col-12">
+            <h1 id="welcomeMessage" class="fw-bold d-inline-block">Welcome</h1>
+            <p class="text-muted mt-2">Here's what's happening with your career development</p>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <div id="ai-assistant-card" class="su-card">
+                <div class="d-flex align-items-center gap-3 mb-4">
+                    <div class="ai-header-icon">
+                        <i class="bi bi-robot"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-0">AI Career Assistant</h5>
+                        <p class="text-muted small mb-0">How can I help you today?</p>
+                    </div>
+                </div>
+                
+                <div id="ai-input-container" class="mb-3">
+                    <input type="text" id="ai-user-input" class="form-control" placeholder="Ask me anything about your career...">
+                    <button id="ai-send-btn">
+                        <i class="bi bi-send-fill fs-5"></i>
+                    </button>
+                </div>
+
+                <div id="ai-thinking" class="d-none">
+                    <div class="dot-pulse"></div>
+                    <span class="text-muted small">Thinking...</span>
+                </div>
+
+                <div id="ai-response" class="d-none">
+                    <h6 class="fw-bold mb-3 text-success">Response:</h6>
+                    <p id="ai-response-text"></p>
+                </div>
+
+                <div class="suggestions-container d-flex flex-wrap gap-2 pt-3">
+                    <button class="suggestion-chip">
+                        <i class="bi bi-lightbulb-fill text-warning"></i> How do I become a full-stack developer?
+                    </button>
+                    <button class="suggestion-chip">
+                        <i class="bi bi-lightbulb-fill text-warning"></i> What skills should I learn for data science?
+                    </button>
+                    <button class="suggestion-chip">
+                        <i class="bi bi-lightbulb-fill text-warning"></i> Help me build my portfolio
+                    </button>
+                    <button class="suggestion-chip">
+                        <i class="bi bi-lightbulb-fill text-warning"></i> How to prepare for tech interviews?
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5 g-4">
+        <div class="col-md-3">
+            <div class="su-card stat-card h-100">
+                <div class="stat-icon" style="background-color: var(--icon-progress-bg); color: var(--icon-progress);">
+                    <i class="bi bi-graph-up"></i>
+                </div>
+                <div>
+                    <div class="stat-value">68%</div>
+                    <div class="stat-label">Learning Progress</div>
+                    <div class="stat-meta text-success fw-medium">+12% this week</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="su-card stat-card h-100">
+                <div class="stat-icon" style="background-color: var(--icon-goals-bg); color: var(--icon-goals);">
+                    <i class="bi bi-bullseye"></i>
+                </div>
+                <div>
+                    <div class="stat-value">5/12</div>
+                    <div class="stat-label">Goals Completed</div>
+                    <div class="stat-meta text-success fw-medium">7 remaining</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="su-card stat-card h-100">
+                <div class="stat-icon" style="background-color: var(--icon-courses-bg); color: var(--icon-courses);">
+                    <i class="bi bi-book"></i>
+                </div>
+                <div>
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Courses Enrolled</div>
+                    <div class="stat-meta text-success fw-medium">2 in progress</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="su-card stat-card h-100">
+                <div class="stat-icon" style="background-color: var(--icon-jobs-bg); color: var(--icon-jobs);">
+                    <i class="bi bi-briefcase"></i>
+                </div>
+                <div>
+                    <div class="stat-value">24</div>
+                    <div class="stat-label">Job Matches</div>
+                    <div class="stat-meta text-success fw-medium">5 new this week</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5 g-4">
+        <div class="col-md-8">
+            <div class="su-card mb-4">
+                <h2 class="su-title">Quick Actions</h2>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="action-card d-block text-decoration-none" onclick="redirectTo('roadmap.html')">
+                            <strong>View My Roadmap</strong>
+                            <p>See your career plan</p>
+                            <i class="bi bi-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="action-card d-block text-decoration-none" onclick="redirectTo('timeline.html')">
+                            <strong>Track Progress</strong>
+                            <p>View your timeline</p>
+                            <i class="bi bi-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="action-card d-block text-decoration-none" onclick="redirectTo('courses.html')">
+                            <strong>Browse Courses</strong>
+                            <p>Continue learning</p>
+                            <i class="bi bi-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="action-card d-block text-decoration-none" onclick="redirectTo('jobs.html')">
+                            <strong>Find Jobs</strong>
+                            <p>Explore opportunities</p>
+                            <i class="bi bi-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="su-card">
+                <h2 class="su-title">Recent Activity</h2>
+                <div class="activity-list px-2">
+                    <div class="activity-item">
+                        <span class="dot"></span>
+                        <div>
+                            <p>Completed: Introduction to Python</p>
+                            <small><i class="bi bi-clock me-1"></i>2 hours ago</small>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot"></span>
+                        <div>
+                            <p>New milestone: Frontend Basics</p>
+                            <small><i class="bi bi-clock me-1"></i>1 day ago</small>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot"></span>
+                        <div>
+                            <p>Applied to: Senior Developer at TechCorp</p>
+                            <small><i class="bi bi-clock me-1"></i>2 days ago</small>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot"></span>
+                        <div>
+                            <p>Started: Advanced React Patterns</p>
+                            <small><i class="bi bi-clock me-1"></i>3 days ago</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="su-card h-100 rec-card p-0 overflow-hidden">
+                <div class="px-4 pt-4">
+                    <h2 class="su-title">Recommended for You</h2>
+                </div>
+                
+                <div class="rec-list">
+                    <div class="rec-item d-flex align-items-center" onclick="redirectTo('profile.html')">
+                        <span class="rec-icon text-success fw-bold"><i class="bi bi-bullseye"></i></span>
+                        <div class="flex-grow-1">
+                            <strong class="d-block">Complete your career assessment</strong>
+                            <p class="small mb-0">Update your skills to get better recommendations</p>
+                        </div>
+                    </div>
+                    <div class="rec-item d-flex align-items-center" onclick="redirectTo('courses.html')">
+                        <span class="rec-icon text-success fw-bold"><i class="bi bi-book"></i></span>
+                        <div class="flex-grow-1">
+                            <strong class="d-block">Check out new courses</strong>
+                            <p class="small mb-0">3 new courses match your learning path</p>
+                        </div>
+                    </div>
+                    <div class="rec-item d-flex align-items-center" onclick="redirectTo('jobs.html')">
+                        <span class="rec-icon text-success fw-bold"><i class="bi bi-briefcase"></i></span>
+                        <div class="flex-grow-1">
+                            <strong class="d-block">Explore job opportunities</strong>
+                            <p class="small mb-0">5 new positions match your profile</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="px-4 pb-4 mt-3">
+                    <div class="keep-up-card rounded-3 su-card">
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="text-success fw-bold fs-4"><i class="bi bi-award"></i></span>
+                            <div>
+                                <strong class="d-block text-success">Keep it up!</strong>
+                                <p class="small mb-0">You're 32% ahead of your monthly goal. Great progress!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+
+     $(document).ready(function () {
+        // Load components
+        $("#navPrivate").load("../components/navPrivate.html");
+        $("#footer").load("../components/footer.html");
+      });
+
+    // --- Global Functions ---
+    function redirectTo(pageUrl) {
+        window.location.href = pageUrl;
+    }
+
+    $(document).ready(function() {
+        // --- Quick Action Hover Border ---
+        // Added via CSS transition on action-card:hover border-color
+        // No additional jQuery needed for border highlight.
+
+        // --- Recommendation Smooth Hover via jQuery (Fade to very light green) ---
+        // I used CSS for a simpler, high-performing 10% opacity green background.
+        // For a more distinct jQuery approach fading to a specific pale color:
+        /*
+        $('.rec-item').hover(
+            function() { // mouseenter
+                $(this).stop().animate({ backgroundColor: '#ecfdf5' }, 200); // Fades to extremely light green
+            }, 
+            function() { // mouseleave
+                $(this).stop().animate({ backgroundColor: '#ffffff' }, 200); // Fades back to white
+            }
+        );
+        */
+        // I kept the CSS approach for performance, the CSS rule is `.rec-item:hover`
+        
+        // --- AI Assistant Logic ---
+        const $aiInput = $('#ai-user-input');
+        const $aiSendBtn = $('#ai-send-btn');
+        const $aiThinking = $('#ai-thinking');
+        const $aiResponse = $('#ai-response');
+        const $aiResponseText = $('#ai-response-text');
+
+        const responses = {
+            "full-stack": "To become a full-stack developer, I recommend focusing on proficiency in frontend (HTML, CSS, JS, a framework like React), backend (Node.js, Python, or others), and database management. I've updated your Roadmap with a detailed path. <a href='roadmap.html'>Check it out here</a>.",
+            "data science": "Key skills for data science include advanced Python or R, statistical analysis, machine learning algorithms, and data visualization. There are great new courses available. <a href='courses.html'>Explore them now</a>.",
+            "portfolio": "Great idea! Building a strong portfolio is crucial. Showcase projects that highlight diverse skills. Let's start with your profile assessment to see what projects align best. <a href='profile.html'>Go to assessment</a>.",
+            "tech interviews": "Preparing for tech interviews involves mastering data structures, algorithms, and system design, plus practicing mock interviews. I recommend finding specific job opportunities and practicing relevant questions. <a href='jobs.html'>Find job opportunities</a>.",
+            "default": "That's an excellent question! Mastering any new career skill takes dedication. Based on your current profile, I suggest checking out our recommended courses to see what matches your current goals. <a href='courses.html'>Check out courses</a>."
+        };
+
+        function processUserInput(userInput) {
+            $aiThinking.removeClass('d-none');
+            $aiResponse.addClass('d-none');
+            $aiResponseText.html("");
+
+            const inputLower = userInput.toLowerCase();
+            let matchedKey = "default";
+            
+            for (const key in responses) {
+                if (inputLower.includes(key)) {
+                    matchedKey = key;
+                    break;
+                }
+            }
+
+            // Thinking simulation: variable delay for natural feel
+            const thinkingTime = Math.random() * (2500 - 1500) + 1500; // 1.5 - 2.5 seconds
+
+            setTimeout(function() {
+                $aiThinking.addClass('d-none');
+                $aiResponse.removeClass('d-none');
+                $aiResponseText.html(responses[matchedKey]);
+                // Smoothly scroll down to see response if necessary
+                $('html, body').animate({ scrollTop: $('#ai-assistant-card').offset().top + 100 }, 300);
+            }, thinkingTime);
+        }
+
+        $aiSendBtn.on('click', function() {
+            const userInput = $aiInput.val().trim();
+            if (userInput) {
+                processUserInput(userInput);
+            }
+        });
+
+        $aiInput.on('keypress', function(e) {
+            if (e.which === 13) { // Enter key
+                const userInput = $aiInput.val().trim();
+                if (userInput) {
+                    processUserInput(userInput);
+                }
+            }
+        });
+
+        $('.suggestion-chip').on('click', function() {
+            const userInput = $(this).text().trim().replace(/^\s+|\s+$/g, ''); // Trim all leading/trailing whitespace including inside chip
+            // For natural behavior, update input field with full text from chip
+            $aiInput.val(userInput);
+            processUserInput(userInput);
+        });
+
+    });
+    $(document).ready(function() {
+        // Retrieve the name from localStorage
+        const userName = localStorage.getItem('userName');
+
+        // Check if the name exists (to avoid displaying "null")
+        if (userName) {
+            // Update the H1 text
+            $('#welcomeMessage').text("Welcome, " + userName + "!");
+        } else {
+            // Fallback if no name is found
+            $('#welcomeMessage').text("Welcome back!");
+        }
+    });
+
+</script>
+
+</body>
+</html>
